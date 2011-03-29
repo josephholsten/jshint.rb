@@ -1,4 +1,4 @@
-# JSLint on Rails
+# JSHint on Rails
 
 [![Build Status](https://secure.travis-ci.org/jsuder/jslint_on_rails.png)](http://travis-ci.org/jsuder/jslint_on_rails)
 
