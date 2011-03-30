@@ -178,4 +178,5 @@ Another thing that's planned for 2.0, whenever that happens, is a redesign of th
 ## Credits
 
 * JSLint on Rails was created by [Jakub Suder](http://psionides.eu), licensed under MIT License
+* JSHint by [JSHint Community](https://github.com/jshint/jshint)
 * JSLint was created by [Douglas Crockford](http://jslint.com)
