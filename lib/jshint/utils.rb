@@ -1,23 +1,23 @@
 require 'fileutils'
 require 'yaml'
 
-module JSLint
+module JSHint
 
   VERSION = "1.1.1"
-  DEFAULT_CONFIG_FILE = File.expand_path(File.dirname(__FILE__) + "/config/jslint.yml")
+  DEFAULT_CONFIG_FILE = File.expand_path(File.dirname(__FILE__) + "/config/jshint.yml")
 
   class << self
     attr_writer :config_path
 
     def config_path
-      @config_path || JSLint::Utils.default_config_path
+      @config_path || JSHint::Utils.default_config_path
     end
   end
 
   module Utils
     class << self
       def in_rails?
-        defined?(Rails)
+        defined?(Rails) && Rails.respond_to?(:root)
       end
 
       def default_config_path
@@ -69,15 +69,31 @@ module JSLint
       end
 
       def copy_config_file
-        display "Creating example JSLint config file in #{File.expand_path(JSLint.config_path)}... "
-        if File.exists?(JSLint.config_path)
+        display "Creating example JSHint config file in #{File.expand_path(JSHint.config_path)}... "
+        if File.exists?(JSHint.config_path)
           log "\n\nWarning: config file exists, so it won't be overwritten. " +
-              "You can copy it manually from the jslint_on_rails directory if you want to reset it."
+                "You can copy it manually from the jshint_on_rails directory if you want to reset it."
         else
-          FileUtils.copy(JSLint::DEFAULT_CONFIG_FILE, JSLint.config_path)
+          FileUtils.copy(JSHint::DEFAULT_CONFIG_FILE, JSHint.config_path)
           log "done."
         end
       end
+
+      def remove_config_file
+        raise ArgumentError, "Please set JSHint.config_path" if JSHint.config_path.nil?
+        display "Removing config file... "
+        if File.exists?(JSHint.config_path) && File.file?(JSHint.config_path)
+          if File.read(JSHint.config_path) == File.read(JSHint::DEFAULT_CONFIG_FILE)
+            File.delete(JSHint.config_path)
+            log "OK."
+          else
+            log "File was modified, so it won't be deleted automatically."
+          end
+        else
+          log "OK (no config file found)."
+        end
+      end
+
     end
   end
 end

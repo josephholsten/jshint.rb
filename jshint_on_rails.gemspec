@@ -1,16 +1,16 @@
 lib_dir = File.expand_path(File.dirname(__FILE__) + '/lib')
 $LOAD_PATH << lib_dir unless $LOAD_PATH.include?(lib_dir)
 
-require 'jslint/utils'
+require 'jshint/utils'
 
 Gem::Specification.new do |s|
-  s.name = "jslint_on_rails"
-  s.version = JSLint::VERSION
-  s.summary = "JSLint JavaScript checker wrapped in a Ruby gem for easier use"
-  s.homepage = "http://github.com/jsuder/jslint_on_rails"
+  s.name = "jshint_on_rails"
+  s.version = JSHint::VERSION
+  s.summary = "JSHint - More flexible JavaScript checker wrapped in a Ruby gem for easier use"
+  s.homepage = "http://github.com/bgouveia/jshint_on_rails"
 
-  s.author = "Jakub Suder"
-  s.email = "jakub.suder@gmail.com"
+  s.author = "Bruno Gouveia"
+  s.email = "brunogouveia@buzungo.com.br"
 
   s.requirements = ['JS engine compatible with execjs', 'JSON engine compatible with multi_json']
 

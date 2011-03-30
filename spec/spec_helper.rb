@@ -1,4 +1,4 @@
-require 'jslint'
+require 'jshint'
 require 'pp' # fix for fakefs/pp incompatibility in Ruby 1.9.3
 require 'fakefs'
 
@@ -20,7 +20,7 @@ module SpecHelper
   end
 
   def create_config(data)
-    create_file(JSLint::DEFAULT_CONFIG_FILE, data)
+    create_file(JSHint::DEFAULT_CONFIG_FILE, data)
   end
 end
 
@@ -29,7 +29,7 @@ RSpec.configure do |config|
 
   config.before do
     # disable logging to stdout
-    JSLint::Utils.stub(:display)
-    JSLint::Utils.stub(:log)
+    JSHint::Utils.stub(:display)
+    JSHint::Utils.stub(:log)
   end
 end

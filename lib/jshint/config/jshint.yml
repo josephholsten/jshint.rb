@@ -1,10 +1,10 @@
 # ------------ rake task options ------------
 
-# JS files to check by default, if no parameters are passed to rake jslint
+# JS files to check by default, if no parameters are passed to rake jshint
 # (you may want to limit this only to your own scripts and exclude any external scripts and frameworks)
 
 # this can be overridden by adding 'paths' and 'exclude_paths' parameter to rake command:
-#   rake jslint paths=path1,path2,... exclude_paths=library1,library2,...
+#   rake jshint paths=path1,path2,... exclude_paths=library1,library2,...
 
 paths:
   - public/javascripts/**/*.js
@@ -12,8 +12,8 @@ paths:
 exclude_paths:
 
 
-# ------------ jslint options ------------
-# see http://www.jslint.com/lint.html#options for more detailed explanations
+# ------------ jshint options ------------
+# see http://jshint.com/#docs for more detailed explanations
 
 # "enforce" type options (true means potentially more warnings)
 
@@ -59,7 +59,7 @@ widget:   false     # true if the Yahoo Widgets globals should be predefined
 devel:    true      # true if functions like alert, confirm, console, prompt etc. are predefined
 
 
-# ------------ jslint_on_rails custom lint options (switch to true to disable some annoying warnings) ------------
+# ------------ jshint_on_rails custom lint options (switch to true to disable some annoying warnings) ------------
 
 # ignores "missing semicolon" warning at the end of a function; this lets you write one-liners
 # like: x.map(function(i) { return i + 1 }); without having to put a second semicolon inside the function

@@ -1,23 +1,27 @@
-require 'jslint/errors'
-require 'jslint/utils'
+require 'jshint/errors'
+require 'jshint/utils'
 require 'execjs'
 require 'multi_json'
 
-module JSLint
+module JSHint
+
   PATH = File.dirname(__FILE__)
-  JSLINT_FILE = File.expand_path("#{PATH}/vendor/jslint.js")
+
+  JSLINT_FILE = File.expand_path("#{PATH}/vendor/jshint.js")
 
   class Lint
 
     # available options:
     # :paths => [list of paths...]
     # :exclude_paths => [list of exluded paths...]
-    # :config_path => path to custom config file (can be set via JSLint.config_path too)
+    # :config_path => path to custom config file (can be set via JSHint.config_path too)
     def initialize(options = {})
       default_config = Utils.load_config_file(DEFAULT_CONFIG_FILE)
-      custom_config = Utils.load_config_file(options[:config_path] || JSLint.config_path)
+      custom_config = Utils.load_config_file(options[:config_path] || JSHint.config_path)
       @config = default_config.merge(custom_config)
-      @config['predef'] = @config['predef'].split(",") unless @config['predef'].is_a?(Array)
+      if @config['predef']
+        @config['predef'] = @config['predef'].split(",") unless @config['predef'].is_a?(Array)
+      end
 
       included_files = files_matching_paths(options, :paths)
       excluded_files = files_matching_paths(options, :exclude_paths)
@@ -29,7 +33,7 @@ module JSLint
 
     def run
       raise NoEngineException, "No JS engine available" unless js_engine
-      Utils.log "Running JSLint via #{js_engine.name}:\n\n"
+      Utils.log "Running JSHint via #{js_engine.name}:\n\n"
 
       errors = @file_list.map { |file| process_file(file) }.flatten
 
@@ -37,7 +41,7 @@ module JSLint
         Utils.log "\nNo JS errors found."
       else
         Utils.log "\nFound #{Utils.pluralize(errors.length, 'error')}."
-        raise LintCheckFailure, "JSLint test failed."
+        raise LintCheckFailure, "JSHint test failed."
       end
     end
 
@@ -81,8 +85,8 @@ module JSLint
 
     def run_lint(source)
       code = %(
-        JSLINT(#{source.inspect}, #{MultiJson.dump(@config)});
-        return JSLINT.errors;
+        JSHINT(#{source.inspect}, #{MultiJson.dump(@config)});
+        return JSHINT.errors;
       )
 
       context.exec(code)

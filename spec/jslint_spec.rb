@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe 'jslint.js' do
   before :all do
-    File.open(JSLint::DEFAULT_CONFIG_FILE, "w") { |f| f.write "color: red\nsize: 5\nshape: circle\n" }
+    File.open(JSHint::DEFAULT_CONFIG_FILE, "w") { |f| f.write "color: red\nsize: 5\nshape: circle\n" }
     File.open("custom_config.yml", "w") { |f| f.write "color: blue\nsize: 7\nborder: 2\n" }
     File.open("other_config.yml", "w") { |f| f.write "color: green\nborder: 0\nshape: square" }
-    JSLint.config_path = "custom_config.yml"
+    JSHint.config_path = "custom_config.yml"
   end
 
   describe "options in comments" do
@@ -23,7 +23,7 @@ describe 'jslint.js' do
     end
 
     it "should not apply local options from one file to all subsequent files" do
-      lint = JSLint::Lint.new(:paths => ["first.js", "second.js"], :config => 'spec-config.yml')
+      lint = JSHint::Lint.new(:paths => ["first.js", "second.js"], :config => 'spec-config.yml')
 
       # silence stdout from jslint
       lint.instance_eval do
@@ -33,7 +33,7 @@ describe 'jslint.js' do
         end
       end
 
-      expect { lint.run }.to raise_error(JSLint::LintCheckFailure)
+      expect { lint.run }.to raise_error(JSHint::LintCheckFailure)
     end
 
     after do
