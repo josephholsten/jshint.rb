@@ -7,7 +7,7 @@ module JSHint
 
   PATH = File.dirname(__FILE__)
 
-  JSLINT_FILE = File.expand_path("#{PATH}/vendor/jshint.js")
+  JSHINT_FILE = File.expand_path("#{PATH}/vendor/jshint.js")
 
   class Lint
 
@@ -93,7 +93,7 @@ module JSHint
     end
 
     def context
-      @context ||= ExecJS.compile(File.read(JSLINT_FILE))
+      @context ||= ExecJS.compile(File.read(JSHINT_FILE))
     end
 
     def files_matching_paths(options, field)
