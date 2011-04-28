@@ -45,7 +45,6 @@ module JSHint
       end
     end
 
-
     private
 
     def js_engine
