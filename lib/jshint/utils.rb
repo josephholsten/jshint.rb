@@ -63,6 +63,10 @@ module JSHint
         list.reject { |entry| excluded.any? { |f| File.identical?(f, entry) }}
       end
 
+      def path_from_command_line(field)
+        ENV[field] || ENV[field.upcase]
+      end
+
       def paths_from_command_line(field)
         argument = ENV[field] || ENV[field.upcase]
         argument && argument.split(/,/)

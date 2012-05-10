@@ -5,6 +5,7 @@ desc "Run JSHint check on selected Javascript files"
 task :jshint do
   include_paths = JSHint::Utils.paths_from_command_line('paths')
   exclude_paths = JSHint::Utils.paths_from_command_line('exclude_paths')
+  config_path = JSHint::Utils.path_from_command_line('config_path')
 
   if include_paths && exclude_paths.nil?
     # if you pass paths= on command line but not exclude_paths=, and you have exclude_paths
@@ -13,7 +14,10 @@ task :jshint do
     exclude_paths = []
   end
 
-  lint = JSHint::Lint.new :paths => include_paths, :exclude_paths => exclude_paths
+  options = {:paths => include_paths, :exclude_paths => exclude_paths}
+  options[:config_path] = config_path if config_path
+
+  lint = JSHint::Lint.new options
   lint.run
 end
 

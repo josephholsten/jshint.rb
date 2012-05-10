@@ -45,50 +45,71 @@ describe JSHint::Utils do
     end
   end
 
-  describe "paths_from_command_line" do
-    it "should extract an array of paths from command line argument" do
-      ENV['test_arg'] = 'one,two,three'
-      JSU.paths_from_command_line('test_arg').should == ['one', 'two', 'three']
+  describe "path_from_command_line" do
+    it "should extract a path from the command line argument" do
+      ENV['test_arg'] = 'file.js'
+      JSU.path_from_command_line('test_arg').should == 'file.js'
     end
-  
-    it "should also work if the argument name is given in uppercase" do
-      ENV['TEST_ARG'] = 'ruby,python,js'
-      JSU.paths_from_command_line('test_arg').should == ['ruby', 'python', 'js']
+
+    it "should work if the argument name is given in uppercase" do
+      ENV['TEST_ARG'] = 'file.js'
+      JSU.path_from_command_line('test_arg').should == 'file.js'
     end
-  
+
     it "should return nil if the argument isn't set" do
-      JSU.paths_from_command_line('crash').should be_nil
+      JSU.path_from_command_line('crash').should be_nil
     end
-  
+
     after :each do
       ENV['test_arg'] = nil
       ENV['TEST_ARG'] = nil
     end
   end
-  
+
+  describe "paths_from_command_line" do
+    it "should extract an array of paths from command line argument" do
+      ENV['test_arg'] = 'one,two,three'
+      JSU.paths_from_command_line('test_arg').should == ['one', 'two', 'three']
+    end
+
+    it "should also work if the argument name is given in uppercase" do
+      ENV['TEST_ARG'] = 'ruby,python,js'
+      JSU.paths_from_command_line('test_arg').should == ['ruby', 'python', 'js']
+    end
+
+    it "should return nil if the argument isn't set" do
+      JSU.paths_from_command_line('crash').should be_nil
+    end
+
+    after :each do
+      ENV['test_arg'] = nil
+      ENV['TEST_ARG'] = nil
+    end
+  end
+
   describe "load_config_file" do
-  
+
     before :all do
       create_file 'sample.yml', 'framework: rails'
       Dir.mkdir("tmp")
     end
-  
+
     it "should load a YAML file if it can be read" do
       JSU.load_config_file("sample.yml").should == { 'framework' => 'rails' }
     end
-  
+
     it "should return an empty hash if file name is nil" do
       JSU.load_config_file(nil).should == {}
     end
-  
+
     it "should return an empty hash if file doesn't exist" do
       JSU.load_config_file("crack.exe").should == {}
     end
-  
+
     it "should return an empty hash if file is not a file" do
       JSU.load_config_file("tmp").should == {}
     end
-  
+
     it "should return an empty hash if file is not readable" do
       File.should_receive(:readable?).once.with("sample.yml").and_return(false)
       JSU.load_config_file("sample.yml").should == {}
