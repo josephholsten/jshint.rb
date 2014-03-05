@@ -22,6 +22,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake'
   s.add_development_dependency 'fakefs', '0.3.2'
 
-  s.files = %w(MIT-LICENSE README.markdown Changelog.markdown Gemfile Gemfile.lock Rakefile)
+  s.files = %w(MIT-LICENSE README.markdown Changelog.markdown Gemfile Rakefile)
   s.files += Dir['lib/**/*'] + Dir['spec/**/*']
 end
