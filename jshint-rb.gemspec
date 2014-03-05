@@ -4,11 +4,11 @@ $LOAD_PATH << lib_dir unless $LOAD_PATH.include?(lib_dir)
 require 'jshint/utils'
 
 Gem::Specification.new do |s|
-  s.name = "jshint"
+  s.name = "jshint-rb"
   s.version = JSHint::VERSION
   s.description = "JSHint wrapped in a Ruby gem for easier use"
   s.summary = "JSHint is a little more flexible JavaScript checker, wrapped in a Ruby gem for easier use"
-  s.homepage = "http://github.com/bgouveia/jshint_on_rails"
+  s.homepage = "http://github.com/josephholsten/jshint.rb"
 
   s.author = "Bruno Gouveia"
   s.email = "brunogouveia@buzungo.com.br"
