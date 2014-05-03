@@ -82,15 +82,22 @@ module JSHint
       errors
     end
 
+    # `run_lint` executes `jshint.js`, via `ExecJS`, on the given
+    # `source` (a string of JS source) and returns an array of
+    # errors.  Sometimes the array from `jshint.js` will contain
+    # `nil` elements.  For example, when there are "too many errors",
+    # `jshint.js` will return an array whose last element is `nil`.
+    # The array returned by `run_lint` omits any such `nil` elements.
     def run_lint(source)
       code = %(
         JSHINT(#{source.inspect}, #{MultiJson.dump(@config)});
         return JSHINT.errors;
       )
 
-      context.exec(code)
+      context.exec(code).compact
     end
 
+    # `context` returns an `ExecJS::ExternalRuntime::Context`
     def context
       @context ||= ExecJS.compile(File.read(JSHINT_FILE))
     end
