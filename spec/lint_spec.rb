@@ -121,4 +121,20 @@ describe JSHint::Lint do
     end
   end
 
+  describe '#run_lint' do
+    context 'when the array returned by ExecJS contains a nil' do
+      it 'returns array in same order, but without the nil' do
+        err1 = double
+        err2 = double
+        execjs_context = double("ExecJS::ExternalRuntime::Context")
+        expect(execjs_context).to \
+          receive(:exec).and_return([err1, err2, nil])
+        lint = described_class.new
+        expect(lint).to receive(:context).and_return(execjs_context)
+        result = lint.send(:run_lint, double("JS Source"))
+        expect(result).to eq([err1, err2])
+      end
+    end
+  end
+
 end
