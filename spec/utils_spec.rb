@@ -161,17 +161,17 @@ describe JSHint::Utils do
     it "should remove the file if it's identical to default one" do
       JSHint.config_path = "newfile3.yml"
       File.open("newfile3.yml", "w") { |f| f.print("default config file") }
-      File.exists?("newfile3.yml").should be_true
+      File.exists?("newfile3.yml").should be_truthy
       JSHint::Utils.remove_config_file
-      File.exists?("newfile3.yml").should be_false
+      File.exists?("newfile3.yml").should be_falsey
     end
 
     it "should not remove the file if it's not identical to default one" do
       JSHint.config_path = "newfile4.yml"
       File.open("newfile4.yml", "w") { |f| f.puts("something's changed") }
-      File.exists?("newfile4.yml").should be_true
+      File.exists?("newfile4.yml").should be_truthy
       JSHint::Utils.remove_config_file
-      File.exists?("newfile4.yml").should be_true
+      File.exists?("newfile4.yml").should be_truthy
     end
 
     it "should not remove the file if it doesn't exist" do
@@ -183,8 +183,8 @@ describe JSHint::Utils do
       Dir.mkdir("public")
       JSHint.config_path = "public"
       lambda { JSHint::Utils.remove_config_file }.should_not raise_error
-      File.exist?("public").should be_true
-      File.directory?("public").should be_true
+      File.exist?("public").should be_truthy
+      File.directory?("public").should be_truthy
     end
   end
 

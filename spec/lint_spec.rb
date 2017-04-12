@@ -69,8 +69,8 @@ describe JSHint::Lint do
 
   describe "file lists" do
     before :each do
-      JSHint::Utils.stub!(:exclude_files).and_return { |inc, exc| inc - exc }
-      JSHint::Utils.stub!(:unique_files).and_return { |files| files.uniq }
+      JSHint::Lint.any_instance.stub(:exclude_files).and_return { |inc, exc| inc - exc }
+      JSHint::Lint.any_instance.stub(:unique_files).and_return { |files| files.uniq }
     end
 
     before :all do
